@@ -9,13 +9,16 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@types/react": "~18.2.45",
+    "@types/react-redux": "^7.1.33",
     "expo": "~50.0.14",
     "expo-status-bar": "~1.11.1",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.73.6",
-    "typescript": "^5.3.0",
-    "@types/react": "~18.2.45"
+    "react-redux": "^9.1.1",
+    "redux": "^5.0.1",
+    "typescript": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
