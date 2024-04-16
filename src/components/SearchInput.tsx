@@ -27,6 +27,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
             </View>
             <View className="bg-black rounded ml-2 h-10">
                 <Button
+                    disabled={!username}
                     color={'white'}
                     title="Search"
                     onPress={handleSearch}

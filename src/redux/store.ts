@@ -1,15 +1,12 @@
-import { createStore, combineReducers } from 'redux';
-import { userReducer } from './reducers/userReducer';
+import { createStore, applyMiddleware } from 'redux';
+import rootReducer, { RootState } from './reducers';
+import { RootAction } from './actions';
+import { thunk, ThunkMiddleware } from 'redux-thunk';
 
-// Combine reducers
-const rootReducer = combineReducers({
-  user: userReducer,
-});
-
-// Define root state type
-export type RootState = ReturnType<typeof rootReducer>;
-
-// Create Redux store
-const store = createStore(rootReducer);
+const store = createStore(
+    rootReducer,
+    {},
+    applyMiddleware(thunk as ThunkMiddleware<RootState, RootAction>)
+);
 
 export default store;

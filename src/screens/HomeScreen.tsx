@@ -1,35 +1,35 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Alert } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/reducers';
+import { fetchUserDataAsync } from '../redux/actions/userActions';
 import SearchInput from '../components/SearchInput';
 import ResultList from '../components/ResultList';
-import ErrorMessage from '../components/ErrorMessage';
+import { Dispatch } from 'redux';
 
 const HomeScreen: React.FC = () => {
-    // Mock data for demonstration
-    const data = [
-        { uid: '1', name: 'Shirley Kauffman', rank: 1, bananas: 6609 },
-        { uid: '2', name: 'Earleen Douse', rank: 2, bananas: 1900 },
-    ];
+    const dispatch = useDispatch<Dispatch<any>>();
+    const { userData, errorMessage, isProcessing } = useSelector((state: RootState) => state.user);
+    const [username, setUsername] = useState('')
 
-    // Mock error message for demonstration
-    const errorMessage: string | null = null;
-
-    // Function to handle search
     const handleSearch = (username: string) => {
-        // search logic here
-        // Update data and errorMessage accordingly
+        // Dispatch the fetchUserDataAsync action with the username
+        dispatch(fetchUserDataAsync(username));
+        setUsername(username)
     };
 
+    useEffect(() => {
+        errorMessage && Alert.alert(errorMessage)
+    }, [errorMessage])
+
     return (
-        <View className="flex-1 px-4">
+        <View className="flex-1 px-4 justify-center">
 
             <Text className="text-gray-800 text-2xl font-bold mb-4">Case Study Leaderboard</Text>
 
             <SearchInput onSearch={handleSearch} />
 
-            {errorMessage && <ErrorMessage message={errorMessage} />}
-
-            <ResultList data={data} />
+            {userData.length > 0 && <ResultList searchQuery={username} data={userData} />}
 
         </View>
     );
